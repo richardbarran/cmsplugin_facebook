@@ -1,114 +1,49 @@
-# encoding: utf-8
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-class Migration(SchemaMigration):
-
-    def forwards(self, orm):
-        
-        # Adding model 'FacebookShareButton'
-        db.create_table('cmsplugin_facebooksharebutton', (
-            ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
-            ('style', self.gf('django.db.models.fields.CharField')(max_length=12)),
-            ('share_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('button_text', self.gf('django.db.models.fields.CharField')(default=u'Share', max_length=255)),
-        ))
-        db.send_create_signal('cmsplugin_facebook', ['FacebookShareButton'])
-
-        # Adding model 'FacebookLikeBox'
-        db.create_table('cmsplugin_facebooklikebox', (
-            ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
-            ('pageurl', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('width', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=None, null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=587)),
-            ('connections', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=10)),
-            ('stream', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('header', self.gf('django.db.models.fields.BooleanField')(default=True)),
-        ))
-        db.send_create_signal('cmsplugin_facebook', ['FacebookLikeBox'])
-
-        # Adding model 'FacebookLikeButton'
-        db.create_table('cmsplugin_facebooklikebutton', (
-            ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
-            ('pageurl', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('layout', self.gf('django.db.models.fields.CharField')(default='standard', max_length=50)),
-            ('show_faces', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('width', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=None, null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=80)),
-            ('verb', self.gf('django.db.models.fields.CharField')(default='like', max_length=50)),
-            ('font', self.gf('django.db.models.fields.CharField')(default='verdana', max_length=50)),
-            ('color_scheme', self.gf('django.db.models.fields.CharField')(default='light', max_length=50)),
-        ))
-        db.send_create_signal('cmsplugin_facebook', ['FacebookLikeButton'])
+from django.db import models, migrations
 
 
-    def backwards(self, orm):
-        
-        # Deleting model 'FacebookShareButton'
-        db.delete_table('cmsplugin_facebooksharebutton')
+class Migration(migrations.Migration):
 
-        # Deleting model 'FacebookLikeBox'
-        db.delete_table('cmsplugin_facebooklikebox')
+    dependencies = [
+        ('cms', '0003_auto_20140926_2347'),
+    ]
 
-        # Deleting model 'FacebookLikeButton'
-        db.delete_table('cmsplugin_facebooklikebutton')
-
-
-    models = {
-        'cms.cmsplugin': {
-            'Meta': {'object_name': 'CMSPlugin'},
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'language': ('django.db.models.fields.CharField', [], {'max_length': '15', 'db_index': 'True'}),
-            'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cms.CMSPlugin']", 'null': 'True', 'blank': 'True'}),
-            'placeholder': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cms.Placeholder']", 'null': 'True'}),
-            'plugin_type': ('django.db.models.fields.CharField', [], {'max_length': '50', 'db_index': 'True'}),
-            'position': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'publisher_is_draft': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
-            'publisher_public': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'publisher_draft'", 'unique': 'True', 'null': 'True', 'to': "orm['cms.CMSPlugin']"}),
-            'publisher_state': ('django.db.models.fields.SmallIntegerField', [], {'default': '0', 'db_index': 'True'}),
-            'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'})
-        },
-        'cms.placeholder': {
-            'Meta': {'object_name': 'Placeholder'},
-            'default_width': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'slot': ('django.db.models.fields.CharField', [], {'max_length': '50', 'db_index': 'True'})
-        },
-        'cmsplugin_facebook.facebooklikebox': {
-            'Meta': {'object_name': 'FacebookLikeBox', 'db_table': "'cmsplugin_facebooklikebox'", '_ormbases': ['cms.CMSPlugin']},
-            'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
-            'connections': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '10'}),
-            'header': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'height': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '587'}),
-            'pageurl': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'stream': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'width': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': 'None', 'null': 'True', 'blank': 'True'})
-        },
-        'cmsplugin_facebook.facebooklikebutton': {
-            'Meta': {'object_name': 'FacebookLikeButton', 'db_table': "'cmsplugin_facebooklikebutton'", '_ormbases': ['cms.CMSPlugin']},
-            'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
-            'color_scheme': ('django.db.models.fields.CharField', [], {'default': "'light'", 'max_length': '50'}),
-            'font': ('django.db.models.fields.CharField', [], {'default': "'verdana'", 'max_length': '50'}),
-            'height': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '80'}),
-            'layout': ('django.db.models.fields.CharField', [], {'default': "'standard'", 'max_length': '50'}),
-            'pageurl': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'show_faces': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'verb': ('django.db.models.fields.CharField', [], {'default': "'like'", 'max_length': '50'}),
-            'width': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': 'None', 'null': 'True', 'blank': 'True'})
-        },
-        'cmsplugin_facebook.facebooksharebutton': {
-            'Meta': {'object_name': 'FacebookShareButton', 'db_table': "'cmsplugin_facebooksharebutton'", '_ormbases': ['cms.CMSPlugin']},
-            'button_text': ('django.db.models.fields.CharField', [], {'default': "u'Share'", 'max_length': '255'}),
-            'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
-            'share_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'style': ('django.db.models.fields.CharField', [], {'max_length': '12'})
-        }
-    }
-
-    complete_apps = ['cmsplugin_facebook']
+    operations = [
+        migrations.CreateModel(
+            name='FacebookLikeBox',
+            fields=[
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('pageurl', models.URLField(help_text="If blank, the page where it's displayed will be used.", null=True, verbose_name='URL to like', blank=True)),
+                ('width', models.PositiveSmallIntegerField(default=None, help_text='Leave empty for auto scaling.', null=True, verbose_name='Width', blank=True)),
+                ('height', models.PositiveSmallIntegerField(default=587, verbose_name='Height')),
+                ('connections', models.PositiveSmallIntegerField(default=10, verbose_name='Amount of Users')),
+                ('transparent', models.BooleanField(default=True, verbose_name='Transparent')),
+                ('stream', models.BooleanField(default=True, verbose_name='Show stream')),
+                ('header', models.BooleanField(default=True, verbose_name='Show header')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('cms.cmsplugin',),
+        ),
+        migrations.CreateModel(
+            name='FacebookLikeButton',
+            fields=[
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('pageurl', models.URLField(help_text="If blank, the page where it's displayed will be used.", null=True, verbose_name='URL to like', blank=True)),
+                ('layout', models.CharField(default=b'standard', max_length=50, verbose_name='Layout Style', choices=[(b'standard', 'standard'), (b'button_count', 'button count')])),
+                ('show_faces', models.BooleanField(default=True, help_text='Show profile pictures below the like button.', verbose_name='Show Faces')),
+                ('width', models.PositiveSmallIntegerField(default=None, help_text='Leave empty for auto scaling.', null=True, verbose_name='Width', blank=True)),
+                ('height', models.PositiveSmallIntegerField(default=80, verbose_name='Height')),
+                ('verb', models.CharField(default=b'like', max_length=50, verbose_name='Verb to display', choices=[(b'like', 'like'), (b'recommend', 'recommend')])),
+                ('font', models.CharField(default=b'verdana', max_length=50, verbose_name='Font', choices=[(b'arial', 'Arial'), (b'lucida+grande', 'lucida grande'), (b'segoe+ui', 'segoe ui'), (b'tahoma', 'tahoma'), (b'trebuchet+ms', 'trebuchet ms'), (b'verdana', 'verdana')])),
+                ('color_scheme', models.CharField(default=b'light', max_length=50, verbose_name='Color Scheme', choices=[(b'light', 'light'), (b'dark', 'dark')])),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('cms.cmsplugin',),
+        ),
+    ]
