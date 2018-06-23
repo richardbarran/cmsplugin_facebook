@@ -14,12 +14,12 @@ class BasePlugin(CMSPluginBase):
         return context
 
 
-class FacebookLikeBoxPlugin(BasePlugin):
-    model = models.FacebookLikeBox
-    name = 'Facebook Like Box'
+class FacebookPagePluginPlugin(BasePlugin):
+    model = models.FacebookPagePlugin
+    name = 'Facebook Page Plugin'
     module = 'Facebook'
-    render_template = 'cmsplugin_facebook/likebox.html'
-    change_form_template = 'cmsplugin_facebook/likebox_change_form.html'
+    render_template = 'cmsplugin_facebook/pageplugin.html'
+    change_form_template = 'cmsplugin_facebook/pageplugin_change_form.html'
 
 
 class FacebookLikeButtonPlugin(BasePlugin):
@@ -30,5 +30,5 @@ class FacebookLikeButtonPlugin(BasePlugin):
     change_form_template = 'cmsplugin_facebook/likebutton_change_form.html'
 
 
-plugin_pool.register_plugin(FacebookLikeBoxPlugin)
+plugin_pool.register_plugin(FacebookPagePluginPlugin)
 plugin_pool.register_plugin(FacebookLikeButtonPlugin)

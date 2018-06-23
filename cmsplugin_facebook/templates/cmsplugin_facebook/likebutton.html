@@ -1,23 +1,26 @@
-{% comment %}
-<!-- Example from Facebook -->
-<!--
-<iframe src="http://www.facebook.com/plugins/like.php?
-	href=http%3A%2F%2Fwww.facebook.com%2Fbarackobama&amp;
-	layout=standard&amp;
-	show_faces=true&amp;
-	width=450&amp;
-	action=like&amp;
-	height=80"
-	scrolling="no"
-	frameborder="0"
-	style="border:none; overflow:hidden; width:450px; height:80px;"
-	allowTransparency="true">
-</iframe> -->
-{% endcomment %}
+{# Code is copy-and-pasted from Facebook #}
 {% spaceless %}
-<iframe src="http://www.facebook.com/plugins/like.php?href={% autoescape on %}{{ url }}{% endautoescape %}&amp;layout={% if instance.layout %}{{instance.layout}}{% endif %}&amp;show_faces={{instance.show_faces}}&amp;width={% if instance.width %}{{ instance.width }}{% else %}{{ width|default:295 }}{% endif %}&amp;height={{ instance.height }}&amp;action=like&amp;colorscheme=light"
-		frameborder="0"
-		style="border:none;overflow:hidden; width:{% if instance.width %}{{ instance.width }}{% else %}{{ width|default:295 }}{% endif %}px; height:{{ instance.height }}px;"
-		allowTransparency="true">
-</iframe>
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.0';
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Your like button code -->
+<div class="fb-like"
+     data-href="{% autoescape on %}{{ url }}{% endautoescape %}"
+     data-layout="{{ instance.layout }}"
+     data-action="{{ instance.verb }}"
+     data-show-faces="{{ instance.show_faces }}"
+     {% if instance.width %}
+     data-width="{{ instance.width }}"
+     {% endif %}
+     data-colorscheme="{{ instance.color_scheme }}"
+>
+</div>
 {% endspaceless%}
